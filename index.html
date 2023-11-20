@@ -80,6 +80,8 @@
         cardContainer.appendChild(card);
         makeDraggable(card);
         randomizePosition(card);
+
+        card.style.backgroundColor = getRandomColor();
       }
     });
 
@@ -88,6 +90,16 @@
       card.className = 'card';
       card.innerHTML = '<p>' + description + '</p>';
       return card;
+    }
+
+    function getRandomColor() {
+      // Generate random RGB values
+      const red = Math.floor(Math.random() * 256);
+      const green = Math.floor(Math.random() * 256);
+      const blue = Math.floor(Math.random() * 256);
+
+      // Construct a CSS color string
+      return `rgb(${red},${green},${blue})`;
     }
 
     function makeDraggable(element) {
