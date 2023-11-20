@@ -49,9 +49,9 @@
 
     let pieces = [
 
-      "if (mouseY > height*2/3) {<br><br><br><br><br>}",
-      "else if ((mouseY < height*2/3) && (mouseY > height*1/3)) {<br><br><br><br><br>}",
-      "else {&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br><br><br><br><br><br>}",
+      "if (mouseY > height*2/3) {<br><br><br>}",
+      "else if ((mouseY < height*2/3) && (mouseY > height*1/3)) {<br><br><br>}",
+      "else {&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br><br><br>}",
       "let redLight = 'white';<br>let yellowLight = 'white';<br>let greenLight = 'white';",
       "fill('grey');<br>rect(width/2, height/2, 180, 420);",
       "greenLight = 'green';",
@@ -65,7 +65,6 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       const cardContainer = document.querySelector('.card-container');
-      const cards = [];
 
       // Create multiple cards
       for (let i = 0; i < main_pieces.length; i++) {
@@ -82,7 +81,6 @@
         cardContainer.appendChild(card);
         makeDraggable(card, cards);
         randomizePosition(card);
-        cards.push(card);
       }
     });
 
@@ -119,33 +117,6 @@
         const y = getClientY(e) - offsetY;
         element.style.left = `${x}px`;
         element.style.top = `${y}px`;
-
-        /*
-        // Check for collision with other cards
-        for (const card of cards) {
-          if (card !== element && isColliding(element, card)) {
-            const rect = card.getBoundingClientRect();
-            card.style.left = `${x + rect.width / 8}px`;
-            card.style.top = `${y + 20}px`;
-          }
-        }
-        */
-      }
-
-      function isColliding(el1, el2) {
-        const rect1 = el1.getBoundingClientRect();
-        const rect2 = el2.getBoundingClientRect();
-
-        // Check for collision only in the first 1/3 of the width
-        const collisionInFirstThird = rect1.right > rect2.left && rect1.left < rect2.right * (1 / 3) &&
-          rect1.top < rect2.bottom &&
-          rect1.bottom > rect2.top;
-
-        // Check if el1 is smaller than el2
-        const el1IsSmaller = rect1.width * rect1.height < rect2.width * rect2.height;
-
-        // Return true only if both conditions are met
-        return collisionInFirstThird && el1IsSmaller;
       }
 
       function handleDragEnd() {
