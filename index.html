@@ -70,7 +70,6 @@
       for (let i = 0; i < main_pieces.length; i++) {
         const card = createCard(main_pieces[i]);
         cardContainer.appendChild(card);
-        //makeDraggable(card);
         fixedPosition(card, (i * 300) + 20, 0);
 
       }
@@ -79,7 +78,7 @@
       for (let i = 0; i < pieces.length; i++) {
         const card = createCard(pieces[i]);
         cardContainer.appendChild(card);
-        makeDraggable(card, cards);
+        makeDraggable(card);
         randomizePosition(card);
       }
     });
@@ -91,7 +90,7 @@
       return card;
     }
 
-    function makeDraggable(element, cards) {
+    function makeDraggable(element) {
       let offsetX, offsetY, isDragging = false;
 
       // Mouse events
