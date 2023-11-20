@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,14 +21,18 @@
     }
 
     .card {
-        position: absolute;
+      position: absolute;
       width: auto;
       height: auto;
-      padding: 5px; /* Reduced padding */
+      padding: 5px;
+      /* Reduced padding */
       border: 1px solid #ccc;
-      background-color: #3498db; /* Blue background color */
-      color: #fff; /* White text color */
-      border-radius: 10px; /* Rounded corners */
+      background-color: #3498db;
+      /* Blue background color */
+      color: #fff;
+      /* White text color */
+      border-radius: 10px;
+      /* Rounded corners */
       cursor: grab;
     }
 
@@ -36,34 +41,47 @@
     }
   </style>
   <script>
+    let main_pieces = [
+      'function setup(){&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br><br><br><br><br><br><br>}',
+      'function draw(){&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>}',
+    ]
+
     let pieces = [
-        'function draw(){&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>}', 
-        'function setup()&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br><br><br><br><br><br><br><br><br><br><br><br><br>}', 
-        "if (mouseY > height*2/3) {<br><br><br><br><br>}",
-        "else if ((mouseY < height*2/3) && (mouseY > height*1/3)) {<br><br><br><br><br>}",
-        "else {&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br><br><br><br><br><br>}",
-        "let redLight = 'white';<br>let yellowLight = 'white';<br>let greenLight = 'white';",
-        "fill('grey');<br>rect(width/2, height/2, 180, 420);",
-        "greenLight = 'green';",
-        "yellowLight = 'yellow';",
-        "redLight = 'red';",
-        "createCanvas(500, 500);",
-	    "rectMode(CENTER);",
-	    "background('deepSkyBlue');",
-        "fill(redLight);<br>circle(width / 2, height / 2 - 115, 100);<br>fill(yellowLight);<br>circle(width / 2, height / 2, 100);<br>fill(greenLight);<br>circle(width / 2, height / 2 + 115, 100);",
 
-
+      "if (mouseY > height*2/3) {<br><br><br><br><br>}",
+      "else if ((mouseY < height*2/3) && (mouseY > height*1/3)) {<br><br><br><br><br>}",
+      "else {&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br><br><br><br><br><br>}",
+      "let redLight = 'white';<br>let yellowLight = 'white';<br>let greenLight = 'white';",
+      "fill('grey');<br>rect(width/2, height/2, 180, 420);",
+      "greenLight = 'green';",
+      "yellowLight = 'yellow';",
+      "redLight = 'red';",
+      "createCanvas(500, 500);",
+      "rectMode(CENTER);",
+      "background('deepSkyBlue');",
+      "fill(redLight);<br>circle(width / 2, height / 2 - 115, 100);<br>fill(yellowLight);<br>circle(width / 2, height / 2, 100);<br>fill(greenLight);<br>circle(width / 2, height / 2 + 115, 100);",
     ];
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       const cardContainer = document.querySelector('.card-container');
-      
+      const cards = [];
+
+      // Create multiple cards
+      for (let i = 0; i < main_pieces.length; i++) {
+        const card = createCard(main_pieces[i]);
+        cardContainer.appendChild(card);
+        //makeDraggable(card);
+        fixedPosition(card, (i * 300) + 20, 0);
+
+      }
+
       // Create multiple cards
       for (let i = 0; i < pieces.length; i++) {
         const card = createCard(pieces[i]);
         cardContainer.appendChild(card);
-        makeDraggable(card);
+        makeDraggable(card, cards);
         randomizePosition(card);
+        cards.push(card);
       }
     });
 
@@ -74,28 +92,73 @@
       return card;
     }
 
-    function makeDraggable(element) {
+    function makeDraggable(element, cards) {
       let offsetX, offsetY, isDragging = false;
 
-      element.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        offsetX = e.clientX - element.getBoundingClientRect().left;
-        offsetY = e.clientY - element.getBoundingClientRect().top;
-        element.style.cursor = 'grabbing';
-      });
+      // Mouse events
+      element.addEventListener('mousedown', handleDragStart);
+      document.addEventListener('mousemove', handleDragMove);
+      document.addEventListener('mouseup', handleDragEnd);
 
-      document.addEventListener('mousemove', (e) => {
+      // Touch events
+      element.addEventListener('touchstart', handleDragStart);
+      document.addEventListener('touchmove', handleDragMove);
+      document.addEventListener('touchend', handleDragEnd);
+
+      function handleDragStart(e) {
+        isDragging = true;
+        offsetX = getClientX(e) - element.getBoundingClientRect().left;
+        offsetY = getClientY(e) - element.getBoundingClientRect().top;
+        element.style.cursor = 'grabbing';
+      }
+
+      function handleDragMove(e) {
         if (!isDragging) return;
-        const x = e.clientX - offsetX;
-        const y = e.clientY - offsetY;
+        const x = getClientX(e) - offsetX;
+        const y = getClientY(e) - offsetY;
         element.style.left = `${x}px`;
         element.style.top = `${y}px`;
-      });
 
-      document.addEventListener('mouseup', () => {
+        /*
+        // Check for collision with other cards
+        for (const card of cards) {
+          if (card !== element && isColliding(element, card)) {
+            const rect = card.getBoundingClientRect();
+            card.style.left = `${x + rect.width / 8}px`;
+            card.style.top = `${y + 20}px`;
+          }
+        }
+        */
+      }
+
+      function isColliding(el1, el2) {
+        const rect1 = el1.getBoundingClientRect();
+        const rect2 = el2.getBoundingClientRect();
+
+        // Check for collision only in the first 1/3 of the width
+        const collisionInFirstThird = rect1.right > rect2.left && rect1.left < rect2.right * (1 / 3) &&
+          rect1.top < rect2.bottom &&
+          rect1.bottom > rect2.top;
+
+        // Check if el1 is smaller than el2
+        const el1IsSmaller = rect1.width * rect1.height < rect2.width * rect2.height;
+
+        // Return true only if both conditions are met
+        return collisionInFirstThird && el1IsSmaller;
+      }
+
+      function handleDragEnd() {
         isDragging = false;
         element.style.cursor = 'grab';
-      });
+      }
+
+      function getClientX(e) {
+        return e.clientX || e.touches[0].clientX;
+      }
+
+      function getClientY(e) {
+        return e.clientY || e.touches[0].clientY;
+      }
     }
 
     function randomizePosition(element) {
@@ -107,9 +170,16 @@
       element.style.left = `${randomX}px`;
       element.style.top = `${randomY}px`;
     }
+
+    function fixedPosition(element, x, y) {
+      element.style.left = `${x}px`;
+      element.style.top = `${y}px`;
+    }
   </script>
 </head>
+
 <body>
   <div class="card-container"></div>
 </body>
+
 </html>
