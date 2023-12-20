@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>December Challenge LML</title>
+</head>
+<style>
+    div,
+    iframe {
+        margin: 0 auto;
+        background-color: #777;
+    }
+
+    iframe {
+        display: block;
+        border-style: none;
+    }
+
+    header {
+        text-align: center;
+        font-size: 50px;
+        font-weight: bold;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <div class="sketches">
+        <header> Your December Challenge Sketches </header>
+        <h1> Sofia </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2122558/embed/?plusEmbedHash=6fd729b9&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+        <h1> Swetha </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2124126/embed/?plusEmbedHash=b7312e18&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+        <h1> Aminah </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2116751/embed/?plusEmbedHash=5a43fcac&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+        <h1> Saeesha </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2117673/embed/?plusEmbedHash=bc9c8a66&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+        <h1> Allan </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2112389/embed/?plusEmbedHash=79544aa9&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+        <h1> Sebastien </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2116745/embed/?plusEmbedHash=b9939ba1&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+        <h1> Milisha </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2122706/embed/?plusEmbedHash=86943c56&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+        <h1> Anna </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2107903/embed/?plusEmbedHash=bdf4b258&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+        <h1> Kishor </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2126589/embed/?plusEmbedHash=8bb20500&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+    </div>
+    <div class="seconds" style="display: none; overflow: auto;">
+        <header> Second Places </header>
+        <h1> Anna </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2107903/embed/?plusEmbedHash=bdf4b258&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="700" height="700"></iframe>
+        <h1> Sofia </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2122558/embed/?plusEmbedHash=6fd729b9&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="700" height="700"></iframe>
+
+    </div>
+    <div class="first" style="display: none;">
+        <header> FIRST PLACE </header>
+        <header> CONGRATULATIONS </header>
+        <h1> AMINAH </h1>
+        <iframe
+            src="https://openprocessing.org/sketch/2116751/embed/?plusEmbedHash=5a43fcac&userID=394057&plusEmbedTitle=true&show=sketch"
+            width="900" height="900"></iframe>
+
+    </div>
+</body>
+
+<script>
+    document.addEventListener('keydown', function (event) {
+        if (event.keyCode === 49) {
+            document.querySelector('.sketches').style.display = 'none';
+            document.querySelector('.seconds').style.display = '';
+            document.querySelector('.first').style.display = 'none';
+        }
+        if (event.keyCode === 50) {
+            document.querySelector('.sketches').style.display = 'none';
+            document.querySelector('.seconds').style.display = 'none';
+            document.querySelector('.first').style.display = '';
+        }
+
+    }); 
+</script>
+
+</html>
+<!DOCTYPE html>
